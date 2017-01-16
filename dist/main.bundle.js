@@ -49233,7 +49233,7 @@ var AppComponent = (function () {
         };
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.activeComponent = 'redish';
+        this.activeComponent = 'winewood';
     };
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["G" /* Component */])({
@@ -71431,67 +71431,58 @@ var WinewoodComponent = (function () {
         this.full_height = this.element.parentElement.parentElement.clientHeight;
         this.width = this.full_width - this.margins['top'] - this.margins['bottom'];
         this.height = this.full_height - this.margins['left'] - this.margins['right'];
-        var h = this.height / 4, w = this.width / 9;
-        for (var i = 0; i < 100; i++) {
-            this.dataset.push({ 'first': 1, 'second': 5, 'third': 3, 'fourth': 7, 'y': i });
+        var h = 5, w = 10;
+        var switched = true, blinking = false;
+        for (var i = 1; i < 100; i++) {
+            for (var j = 1; j < 125; j++) {
+                this.dataset.push({ 'x': i, 'y': j, });
+            }
         }
         var x = d3.scaleLinear()
-            .domain([0, 4])
-            .range([0, this.width]);
+            .domain([0, 100])
+            .range([0, 2500]);
         var y = d3.scaleLinear()
-            .domain([0, 3])
-            .range([0, this.height]);
+            .domain([0, 100])
+            .range([0, 2500]);
         d3.select('.winewood').select('svg').remove();
         var svg = d3.select('.winewood').append('svg')
-            .attr('height', this.full_height)
-            .attr('width', this.full_width);
-        var background = svg.append('rect')
-            .attr('width', this.width)
-            .attr('height', this.height)
+            .attr('height', 2500)
+            .attr('width', 2500);
+        svg.append('rect')
+            .attr('width', 2500)
+            .attr('height', 2500)
             .attr('fill', '#1B223C');
-        var chart = svg.append('g')
-            .attr('transform', 'translate(' + this.margins['left'] + ',' + this.margins['top'] + ')');
-        var elements = chart.selectAll('g')
+        var domino = svg.selectAll('.domino')
             .data(this.dataset).enter()
             .append('g')
-            .attr('class', 'line')
-            .attr('transform', function (d, i) { return 'translate(' + 0 + ',' + y(d.y) + ')'; });
-        elements.append('g')
-            .attr('transform', function (d, i) { return 'translate(' + d.first * w + ',' + 0 + ')'; })
-            .append('path')
+            .attr('class', 'domino')
+            .attr('transform', function (d) { return 'translate(' + x(d.x) + ',' + y(d.y) + ')'; })
+            .attr('opacity', 1);
+        domino.append('path')
             .attr('d', 'M0 0 L0 ' + h + ' L' + w + ' -' + h + ' L' + w + '-' + 2 * h + ' Z')
+            .attr('id', function (d, i) { return i; })
             .attr('fill', '#FD6069');
-        elements.append('g')
-            .attr('transform', function (d, i) { return 'translate(' + d.second * w + ',' + 0 + ')'; })
-            .append('path')
-            .attr('d', 'M0 0 L0 ' + h + ' L' + w + ' -' + h + ' L' + w + '-' + 2 * h + ' Z')
-            .attr('fill', '#FD6069');
-        elements.append('g')
-            .attr('transform', function (d, i) { return 'translate(' + d.third * w + ',' + 0 + ')'; })
-            .append('path')
-            .attr('d', 'M0' + -(2 * h) + 'L0 ' + -h + ' L' + w + ' ' + h + ' L' + w + ' 0 Z')
-            .attr('fill', '#FD6069');
-        elements.append('g')
-            .attr('transform', function (d, i) { return 'translate(' + d.fourth * w + ',' + 0 + ')'; })
-            .append('path')
-            .attr('d', 'M0' + -(2 * h) + 'L0 ' + -h + ' L' + w + ' ' + h + ' L' + w + ' 0 Z')
-            .attr('fill', '#FD6069');
-        function update(dy) {
-            var transition = svg.selectAll('.chart').transition().duration(5000);
-            transition.attr('transform', 'translate(0,' + dy + ')');
+        //.attr('opacity',1);
+        //.attr('class','blink_me');
+        //.call(function(d,i) { (!blinking) ? (blink(switched), blinking = true) : false; });
+        function blink(switched) {
+            (switched)
+                ? d3.selectAll('.domino path').transition().delay(function (d, i) { return i * .1; }).duration(.5).attr('opacity', 1)
+                : d3.selectAll('.domino path').transition().delay(function (d, i) { return i * .1; }).duration(.5).attr('opacity', 0);
+            setTimeout(function () {
+                switched = !switched;
+                blink(switched);
+            }, 1000);
         }
-        update(-1000);
     };
     WinewoodComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.redrawOnResize = this.renderer.listenGlobal('window', 'resize', function (event) {
-            _this.drawWinewood();
+            //this.drawWinewood();
         });
         this.element = d3.select('.winewood')._groups[0][0];
         this.drawWinewood();
     };
     WinewoodComponent.prototype.ngOnDestroy = function () {
-        this.redrawOnResize();
     };
     WinewoodComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["G" /* Component */])({
@@ -77243,7 +77234,7 @@ module.exports = ".winewood{\n\n}\n"
 /* 768 */
 /***/ function(module, exports) {
 
-module.exports = "<div class=\"comp-selector\" fxLayout=\"row\" fxLayoutAlign=\"end start\" *ngIf=\"activeComponent\">\n  <span\n    [ngStyle]=\"(activeComponent === 'redish') ? {'color' : '#ff0000' } : ''\"\n    (click)=\"updateActiveComponent('redish')\">\n    redish\n  </span>\n  <span [ngStyle]=\"(activeComponent === 'winewood') ? {'color' : '#FD6069' } : ''\"\n        (click)=\"updateActiveComponent('winewood')\">\n    winewood\n  </span>\n</div>\n\n<div class=\"main-content\"\n     [ngClass]=\"(activeComponent === 'winewood') ? 'winewood-container' : ''\"\n     fxLayout=\"column\"\n     fxLayoutAlign=\"center center\">\n  <app-redish *ngIf=\"activeComponent === 'redish'\"></app-redish>\n  <app-winewood *ngIf=\"activeComponent === 'winewood'\"></app-winewood>\n</div>\n"
+module.exports = "<div class=\"comp-selector\" fxLayout=\"row\" fxLayoutAlign=\"end start\"\n     [ngStyle]=\"(activeComponent === 'winewood') ? {'background-color': '#1B223C','color':'white'} : ''\"\n     *ngIf=\"activeComponent\">\n  <span\n    [ngStyle]=\"(activeComponent === 'redish') ? {'color' : '#ff0000' } : ''\"\n    (click)=\"updateActiveComponent('redish')\">\n    redish\n  </span>\n  <span [ngStyle]=\"(activeComponent === 'winewood') ? {'color' : '#FD6069' } : ''\"\n        (click)=\"updateActiveComponent('winewood')\">\n    winewood\n  </span>\n</div>\n\n<div class=\"main-content\"\n     [ngClass]=\"(activeComponent === 'winewood') ? 'winewood-container' : ''\"\n     fxLayout=\"column\"\n     fxLayoutAlign=\"center center\">\n  <app-redish *ngIf=\"activeComponent === 'redish'\"></app-redish>\n  <app-winewood *ngIf=\"activeComponent === 'winewood'\"></app-winewood>\n</div>\n"
 
 /***/ },
 /* 769 */
