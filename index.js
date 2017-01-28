@@ -40,26 +40,6 @@ io.on('connection', function(socket){
 	});
 });
 
-/*app.get('/twit/', function(request, response){
-	var _response = response;
-	var _request = request;
-	var T = new Twit({
-		consumer_key:         'GJuIZGB3vgUO4ARU44N8rLBsb',
-		consumer_secret:      'RBiPbwyBSx4WhhnNtyCZvRX31r9jLnGiGcqzmXkclDh81Kris0',
-		access_token:         '90852060-LFiIvufx6T5xDuYIH13hwEGaICwvkr15Dky2km2PC',
-		access_token_secret:  'jgcZTGavy0EJYZmCEJSKlgPiTqwSmM3xDTNxAbNlSzoB0',
-		timeout_ms:           60*1000,
-	});
-
-	var stream = T.stream('statuses/sample');
-
-	stream.on('tweet', function (tweet) {
-		console.log(tweet.text);
-		io.emit('tweet',tweet);
-	});
-
-});*/
-
-http.listen(5000, function(){
+http.listen(process.env.PORT || 5000, function(){
 	console.log('listening on *:5000');
 });
