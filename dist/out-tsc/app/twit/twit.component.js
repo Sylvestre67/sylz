@@ -8,27 +8,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { socketService } from '../socket.service';
 export var TwitComponent = (function () {
-    function TwitComponent() {
+    function TwitComponent(socketService) {
+        this.socketService = socketService;
+        this.tweets = [];
     }
+    TwitComponent.prototype.sendMessage = function () {
+        this.socketService.getTweets();
+    };
     TwitComponent.prototype.ngOnInit = function () {
-        debugger;
-        socket.on('tweet', function (msg) {
-            console.log('tweet');
-            console.info(msg);
+        var _this = this;
+        this.connection = this.socketService.getTweets()
+            .subscribe(function (tweet) {
+            _this.tweets.push(tweet);
         });
-        socket.on('limit', function (msg) {
-            console.log('limit');
-            console.info(msg);
-        });
+    };
+    TwitComponent.prototype.ngOnDestroy = function () {
+        this.connection.unsubscribe();
     };
     TwitComponent = __decorate([
         Component({
             selector: 'app-twit',
             templateUrl: './twit.component.html',
-            styleUrls: ['./twit.component.css']
+            styleUrls: ['./twit.component.css'],
+            providers: [socketService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [socketService])
     ], TwitComponent);
     return TwitComponent;
 }());
