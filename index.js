@@ -5,7 +5,9 @@ var io = require('socket.io')(http);
 var Twit = require('twit');
 
 app.set('port', (process.env.PORT));
+
 app.use(express.static(__dirname + '/app/dist'));
+app.set('views', __dirname + '/app/dist');
 
 app.engine('html', require('ejs').renderFile);
 
