@@ -6,14 +6,13 @@ var Twit = require('twit');
 
 app.set('port', (process.env.PORT));
 
-app.use(express.static(__dirname + '/app/dist'));
-app.set('views', __dirname + '/dist');
-
+app.use(express.static(__dirname + '/dist'));
 app.engine('html', require('ejs').renderFile);
 
 app.get('/', function(req, res){
 	res.render('index.html');
 });
+
 
 io.on('connection', function(socket){
 	console.log('a user connected');
