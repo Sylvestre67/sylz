@@ -4,8 +4,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Twit = require('twit');
 
-app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/dist'));
+app.set('port', (process.env.PORT));
+app.use(express.static(__dirname + '/app/dist'));
+
 app.engine('html', require('ejs').renderFile);
 
 app.get('/', function(req, res){
