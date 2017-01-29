@@ -19,10 +19,10 @@ io.on('connection', function(socket){
 
 	// On new connection, start a Stream.
 	var T = new Twit({
-		consumer_key:         'GJuIZGB3vgUO4ARU44N8rLBsb',
-		consumer_secret:      'RBiPbwyBSx4WhhnNtyCZvRX31r9jLnGiGcqzmXkclDh81Kris0',
-		access_token:         '90852060-LFiIvufx6T5xDuYIH13hwEGaICwvkr15Dky2km2PC',
-		access_token_secret:  'jgcZTGavy0EJYZmCEJSKlgPiTqwSmM3xDTNxAbNlSzoB0',
+		consumer_key:         process.env.CONSUMER_KEY,
+		consumer_secret:      process.env.CONSUMER_SECRET,
+		access_token:         process.env.ACCESS_TOKEN,
+		access_token_secret:  process.env.ACCESS_TOKEN_SECRET,
 		timeout_ms:           60*1000,
 	});
 	var stream = T.stream('statuses/sample');
