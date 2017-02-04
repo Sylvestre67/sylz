@@ -13,7 +13,6 @@ app.get('/', function(req, res){
 	res.render('index.html');
 });
 
-
 io.on('connection', function(socket){
 	console.log('a user connected');
 
@@ -25,15 +24,33 @@ io.on('connection', function(socket){
 		access_token_secret:  process.env.ACCESS_TOKEN_SECRET,
 		timeout_ms:           60*1000,
 	});
-	var stream = T.stream('statuses/sample');
+
+	//var NYC = [ '40.917577', '40.477399', '-73.700272', '-74.259090' ];
+	var NYC = ['-74,40','-73,41'];
+	var stream = T.stream('statuses/filter', { locations: NYC });
+
+	//var stream = T.stream('statuses/filter', { track: '#POTUS' });
+	//var stream = T.stream('statuses/sample');
 
 	// On each tweet, emit a tweet event to the socket.
+
+	stream.on('message', function (msg) {
+		//console.info(msg);
+	});
+
 	stream.on('tweet', function (tweet) {
+		console.info(tweet.text);
 		io.emit('tweet', tweet);
 	});
 
 	stream.on('limit', function (msg) {
+		console.info(msg);
 		io.emit('limit', msg);
+	});
+
+	stream.on('error', function (msg) {
+		console.log(msg);
+		io.emit('error', msg);
 	});
 
 	//On disconnect, destroy the stream.
