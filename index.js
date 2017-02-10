@@ -2,15 +2,37 @@ var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+var Sequelize = require('sequelize');
+var models = require('./server/models/index');
+
 var Twit = require('twit');
 
 app.set('port', (process.env.PORT));
-
 app.use(express.static(__dirname + '/dist'));
 app.engine('html', require('ejs').renderFile);
 
+// Sanity of DB connection check
+var sequelize = new Sequelize('postgres://postgres:noosfere@127.0.0.1:5433/sylz');
+sequelize
+	.authenticate()
+	.then(function() {
+		console.log('Connected to DB');
+	})
+	.catch(function (err) {
+		console.log('Unable to connect to the database:', err);
+	});
+
 app.get('/', function(req, res){
 	res.render('index.html');
+});
+
+app.get('/twits', function(req, res) {
+	models.Twit.findAll({}).then(function(tweets) {
+		res.json(tweets);
+	}).catch(function(err){
+		res.json({error: err});
+	});
 });
 
 io.on('connection', function(socket){
@@ -31,7 +53,6 @@ io.on('connection', function(socket){
 
 	//var stream = T.stream('statuses/filter', { track: '#POTUS' });
 	//var stream = T.stream('statuses/sample');
-
 	// On each tweet, emit a tweet event to the socket.
 
 	stream.on('message', function (msg) {
@@ -40,6 +61,15 @@ io.on('connection', function(socket){
 
 	stream.on('tweet', function (tweet) {
 		console.info(tweet.text);
+
+		models.Twit.create({
+			//tweetId: tweet.id,
+			text: tweet.text,
+			media: tweet.entities
+		}).then(function(tweet) {
+			console.log('Tweet saved to DB');
+		});
+
 		io.emit('tweet', tweet);
 	});
 
