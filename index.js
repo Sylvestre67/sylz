@@ -13,7 +13,8 @@ app.use(express.static(__dirname + '/dist'));
 app.engine('html', require('ejs').renderFile);
 
 // Sanity of DB connection check
-var sequelize = new Sequelize('postgres://postgres:noosfere@127.0.0.1:5433/sylz');
+
+var sequelize = new Sequelize(process.env.DATABASE_URL);
 sequelize
 	.authenticate()
 	.then(function() {
