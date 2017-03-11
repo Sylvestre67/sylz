@@ -36,3 +36,29 @@ body {
 .main-content{
   height: 100%;
 }
+
+/* text fading animation */
+.opacity (@opacity: 0.5) {
+  -webkit-opacity: 	@opacity;
+  -moz-opacity: 		@opacity;
+  opacity: 		@opacity;
+}
+
+.animations(@name,@duration:250ms,@timing:ease,@delay:0s,@iteration:infinite){
+  -webkit-animation:  @name @duration @timing @delay @iteration;
+  -moz-animation:     @name @duration @timing @delay @iteration;
+  animation:          @name @duration @timing @delay @iteration;
+}
+
+.fade-mixin-frames(){
+  from   {.opacity(@opacity: 0);}
+  to     {.opacity(@opacity: 1);}
+}
+@keyframes         fade { .fade-mixin-frames; }
+@-webkit-keyframes fade { .fade-mixin-frames; }
+@-o-keyframes      fade { .fade-mixin-frames; }
+@-ms-keyframes     fade { .fade-mixin-frames; }
+
+.blink{
+  .animations(@name:fade,@duration:500ms,@delay:300ms,@iteration:infinite);
+}

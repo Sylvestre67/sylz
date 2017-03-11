@@ -381,7 +381,7 @@ exports = module.exports = __webpack_require__(296)();
 exports.i(__webpack_require__(876), "");
 
 // module
-exports.push([module.i, "html {\n  position: relative;\n  height: 100%;\n}\nbody {\n  position: relative;\n  height: 100%;\n  min-height: 100%;\n  box-sizing: border-box;\n  background-color: white;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n@media (min-width: 900px) {\n}\n@media (max-width: 899px) {\n}\n@media (max-width: 599px) {\n}\n.main-content {\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, "html {\n  position: relative;\n  height: 100%;\n}\nbody {\n  position: relative;\n  height: 100%;\n  min-height: 100%;\n  box-sizing: border-box;\n  background-color: white;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n@media (min-width: 900px) {\n}\n@media (max-width: 899px) {\n}\n@media (max-width: 599px) {\n}\n.main-content {\n  height: 100%;\n}\n/* text fading animation */\n@keyframes fade {\n  from {\n    -webkit-opacity: 0;\n    -moz-opacity: 0;\n    opacity: 0;\n  }\n  to {\n    -webkit-opacity: 1;\n    -moz-opacity: 1;\n    opacity: 1;\n  }\n}\n@-webkit-keyframes fade {\n  from {\n    -webkit-opacity: 0;\n    -moz-opacity: 0;\n    opacity: 0;\n  }\n  to {\n    -webkit-opacity: 1;\n    -moz-opacity: 1;\n    opacity: 1;\n  }\n}\n.blink {\n  -webkit-animation: fade 500ms ease 300ms infinite;\n  animation: fade 500ms ease 300ms infinite;\n}\n", ""]);
 
 // exports
 

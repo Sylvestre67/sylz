@@ -61,15 +61,15 @@ io.on('connection', function(socket){
 	});
 
 	stream.on('tweet', function (tweet) {
-		console.info(tweet.text);
+		//console.info(tweet.text);
 
-		models.Twit.create({
+		/*models.Twit.create({
 			//tweetId: tweet.id,
 			text: tweet.text,
 			media: tweet.entities
 		}).then(function(tweet) {
-			console.log('Tweet saved to DB');
-		});
+			//console.log('Tweet saved to DB');
+		});*/
 
 		io.emit('tweet', tweet);
 	});
